@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoomGrief — Донат-магазин</title>
+    <link id="site-favicon" rel="icon" href="avatar.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    colors: {
+                        bg: '#0c0912',
+                        card: '#130e1c',
+                        card2: '#1a1326',
+                        pinksoft: '#f5b4dc',
+                        purplesoft: '#c49bff'
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen antialiased selection:bg-pinksoft/30 selection:text-white">
+
+    <!-- ==================== ПУБЛИЧНЫЙ САЙТ ==================== -->
+    <div id="public-view">
+        <header class="sticky top-0 z-40 glass-header border-b border-soft">
+            <div class="max-w-6xl mx-auto px-5 h-[72px] flex items-center justify-between gap-4">
+                <a href="#" class="flex items-center gap-3 group">
+                    <img src="avatar.webp" alt="Logo" data-site-avatar
+                        class="w-10 h-10 rounded-[10px] object-cover border border-soft bg-card2 shrink-0"
+                        onerror="if(window.AVATAR_FALLBACK){this.onerror=null;this.src=AVATAR_FALLBACK;}">
+                    <div>
+                        <div data-site-name class="font-extrabold text-[17px] leading-tight tracking-tight text-white">BoomGrief</div>
+                        <div id="pub-version" class="text-[12px] text-[#b8aec8] leading-tight">1.16.5–1.21</div>
+                    </div>
+                </a>
+
+                <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-[#b8aec8]">
+                    <a href="#store" class="hover:text-white transition">Магазин</a>
+                    <a href="#how" class="hover:text-white transition">Как купить</a>
+                    <a href="#team" id="nav-team-link" class="hover:text-white transition">Команда</a>
+                    <button type="button" onclick="openRulesModal()" class="hover:text-white transition">Правила</button>
+                    <a href="#faq" id="nav-faq-link" class="hover:text-white transition">FAQ</a>
+                </nav>
+
+                <div class="flex items-center gap-2.5">
+                    <div class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full bg-card border border-soft text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+                        <span class="text-[#b8aec8]">Онлайн:</span>
+                        <span id="pub-online" class="text-white">142</span>
+                    </div>
+                    <button type="button" onclick="copyServerIp()"
+                        class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-pinksoft/10 hover:bg-pinksoft/20 border border-pinksoft/30 text-xs font-semibold text-white transition">
+                        <span id="pub-ip">play.boomgrief.ru</span>
+                        <svg class="w-3.5 h-3.5 text-pinksoft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-6xl mx-auto px-5">
+            <!-- Hero -->
+            <section class="relative pt-16 pb-10 text-center overflow-hidden">
+                <div class="hero-grid absolute inset-0 pointer-events-none"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card border border-soft text-xs font-semibold text-[#b8aec8] mb-6">
+                        <span class="w-2 h-2 rounded-full bg-pinksoft shadow-[0_0_8px_#f5b4dc]"></span>
+                        <span>Официальный магазин</span>
+                        <span class="text-white/20">•</span>
+                        <span id="pub-hero-version" class="text-white">1.16.5–1.21</span>
+                    </div>
+
+                    <h1 id="pub-hero-title" class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+                        Донат-магазин <span class="text-pinksoft">BoomGrief</span>
+                    </h1>
+                    <p id="pub-hero-sub" class="text-[#b8aec8] text-base max-w-xl mx-auto mb-8">
+                        Привилегии, кейсы и токены с моментальной выдачей на сервер
+                    </p>
+
+                    <div class="flex flex-wrap items-center justify-center gap-3">
+                        <a href="#store"
+                            class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-sm transition">
+                            <span>Выбрать товары</span>
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                                <path d="M12 5v14M5 12l7 7 7-7"/>
+                            </svg>
+                        </a>
+                        <button type="button" onclick="copyServerIp()"
+                            class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-card border border-soft border-soft-hover text-sm font-semibold text-white transition">
+                            <span class="text-[#b8aec8]">IP:</span>
+                            <span id="pub-hero-ip" class="font-mono text-pinksoft">play.boomgrief.ru</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Преимущества -->
+            <section class="pb-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                    <div class="bg-card/90 border border-soft rounded-2xl p-5 flex items-start gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-pinksoft/10 border border-pinksoft/25 flex items-center justify-center text-pinksoft shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-white mb-0.5">Быстрая выдача</div>
+                            <p class="text-xs text-[#b8aec8] leading-relaxed">Привилегии и валюта зачисляются на аккаунт сразу после подтверждения оплаты.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-card/90 border border-soft rounded-2xl p-5 flex items-start gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-purplesoft/10 border border-purplesoft/25 flex items-center justify-center text-purplesoft shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-white mb-0.5">Надёжная оплата</div>
+                            <p class="text-xs text-[#b8aec8] leading-relaxed">Безопасные платёжные методы, скидочные купоны и прозрачная проверка заказов.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-card/90 border border-soft rounded-2xl p-5 flex items-start gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-pinksoft/10 border border-pinksoft/25 flex items-center justify-center text-pinksoft shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-white mb-0.5">Живая поддержка</div>
+                            <p class="text-xs text-[#b8aec8] leading-relaxed">Если возник вопрос или ошибка в нике — команда всегда поможет в Discord.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Магазин -->
+            <section id="store" class="py-8">
+                <div class="text-center mb-7">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1.5">Каталог товаров</h2>
+                    <p class="text-xs sm:text-sm text-[#b8aec8]">Выберите категорию и нужный товар для вашего аккаунта</p>
+                </div>
+                <div id="pub-categories" class="flex flex-wrap items-center justify-center gap-2.5 mb-8"></div>
+                <div id="pub-products"></div>
+            </section>
+
+            <!-- Последние покупки -->
+            <section id="recent-purchases" class="hidden py-6">
+                <div class="bg-card border border-soft rounded-2xl p-5 sm:p-6">
+                    <div class="flex items-center justify-between gap-3 mb-4">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-pinksoft shadow-[0_0_8px_#f5b4dc]"></span>
+                            <h3 class="text-sm font-bold text-white">Последние покупки</h3>
+                        </div>
+                        <span class="text-[11px] text-[#b8aec8]">Обновляется в реальном времени</span>
+                    </div>
+                    <div id="pub-recent-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+                </div>
+            </section>
+
+            <!-- Как проходит покупка -->
+            <section id="how" class="py-10">
+                <div class="text-center mb-7">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1.5">Как проходит покупка</h2>
+                    <p class="text-xs sm:text-sm text-[#b8aec8]">Всего три простых шага до получения товара на сервере</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-card border border-soft rounded-2xl p-6">
+                        <div class="text-xs font-extrabold text-pinksoft font-mono mb-3">ШАГ 01</div>
+                        <h3 class="text-base font-bold mb-1.5">Выберите товар</h3>
+                        <p class="text-xs text-[#b8aec8] leading-relaxed">Откройте нужную категорию, выберите привилегию или количество валюты и нажмите «Купить».</p>
+                    </div>
+                    <div class="bg-card border border-soft rounded-2xl p-6">
+                        <div class="text-xs font-extrabold text-purplesoft font-mono mb-3">ШАГ 02</div>
+                        <h3 class="text-base font-bold mb-1.5">Укажите ник и оплатите</h3>
+                        <p class="text-xs text-[#b8aec8] leading-relaxed">Введите точный игровой никнейм, примените промокод при наличии и выберите способ оплаты.</p>
+                    </div>
+                    <div class="bg-card border border-soft rounded-2xl p-6">
+                        <div class="text-xs font-extrabold text-pinksoft font-mono mb-3">ШАГ 03</div>
+                        <h3 class="text-base font-bold mb-1.5">Получите на сервере</h3>
+                        <p class="text-xs text-[#b8aec8] leading-relaxed">После подтверждения оплаты покупка автоматически активируется на вашем аккаунте.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Блоки команды -->
+            <section id="team" class="py-10">
+                <div id="pub-team-list" class="flex flex-col gap-5"></div>
+            </section>
+
+            <!-- FAQ -->
+            <section id="faq" class="py-10">
+                <div class="text-center mb-8">
+                    <h2 id="pub-faq-title" class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">Частые вопросы</h2>
+                    <p id="pub-faq-sub" class="text-sm text-[#b8aec8]">Ответы на популярные вопросы о покупке и выдаче доната</p>
+                </div>
+                <div id="pub-faq-list" class="max-w-3xl mx-auto flex flex-col gap-3"></div>
+            </section>
+        </main>
+
+        <footer class="mt-16 border-t border-soft py-7">
+            <div class="max-w-6xl mx-auto px-5 flex flex-wrap items-center justify-between gap-4 text-xs text-[#b8aec8]">
+                <div class="flex items-center gap-3">
+                    <img src="avatar.webp" alt="Logo" data-site-avatar
+                        class="w-8 h-8 rounded-lg object-cover border border-soft bg-card2"
+                        onerror="if(window.AVATAR_FALLBACK){this.onerror=null;this.src=AVATAR_FALLBACK;}">
+                    <span>© <span data-site-name>BoomGrief</span>. Не связано с Mojang AB.</span>
+                </div>
+                <div class="flex items-center gap-5">
+                    <button type="button" onclick="openRulesModal()" class="hover:text-white transition">Правила</button>
+                    <a href="#admin" class="hover:text-white transition">Админ-панель</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ==================== АДМИН-ПАНЕЛЬ ==================== -->
+    <div id="admin-view" class="hidden min-h-screen py-8 px-5">
+        <!-- Вход -->
+        <div id="admin-login-box" class="max-w-md mx-auto mt-14 bg-card border border-soft rounded-3xl p-7">
+            <div class="flex items-center justify-between gap-3 mb-6">
+                <div class="flex items-center gap-3">
+                    <img src="avatar.webp" alt="Logo" data-site-avatar
+                        class="w-11 h-11 rounded-xl object-cover border border-soft bg-card2 shrink-0"
+                        onerror="if(window.AVATAR_FALLBACK){this.onerror=null;this.src=AVATAR_FALLBACK;}">
+                    <div>
+                        <h2 class="text-lg font-extrabold leading-tight">Админ-панель</h2>
+                        <p class="text-xs text-[#b8aec8]"><span data-site-name>BoomGrief</span></p>
+                    </div>
+                </div>
+                <div id="ws-status-login" class="flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-bg border border-soft">
+                    <span class="ws-dot w-2 h-2 rounded-full bg-red-500"></span>
+                    <span class="ws-text text-[#b8aec8]">Нет соединения</span>
+                </div>
+            </div>
+
+            <form id="admin-login-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Логин</label>
+                    <input id="login-input" type="text" required placeholder="admin"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Пароль</label>
+                    <input id="password-input" type="password" required placeholder="••••••••"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                </div>
+                <div id="admin-login-error" class="hidden text-xs text-red-300 bg-red-500/10 border border-red-500/30 rounded-xl px-3.5 py-2.5"></div>
+                <button type="submit"
+                    class="w-full py-3 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-sm transition">
+                    Войти в панель
+                </button>
+            </form>
+
+            <div class="mt-5 pt-4 border-t border-soft text-center">
+                <a href="#" onclick="goPublic(event)" class="text-xs text-[#b8aec8] hover:text-white transition">← Вернуться в магазин</a>
+            </div>
+        </div>
+
+        <!-- Дашборд -->
+        <div id="admin-dashboard" class="hidden max-w-6xl mx-auto">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div class="flex items-center gap-3.5">
+                    <img src="avatar.webp" alt="Logo" data-site-avatar
+                        class="w-11 h-11 rounded-xl object-cover border border-soft bg-card2"
+                        onerror="if(window.AVATAR_FALLBACK){this.onerror=null;this.src=AVATAR_FALLBACK;}">
+                    <div>
+                        <h1 class="text-xl font-extrabold tracking-tight">Панель управления — <span data-site-name class="text-pinksoft">BoomGrief</span></h1>
+                        <p class="text-xs text-[#b8aec8]">Изменения применяются у всех пользователей в реальном времени</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2.5 flex-wrap">
+                    <div id="ws-status-dash" class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-card border border-soft">
+                        <span class="ws-dot w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span class="ws-text text-[#b8aec8]">Подключено</span>
+                    </div>
+                    <a href="#" onclick="goPublic(event)"
+                        class="px-4 py-2 rounded-xl bg-card border border-soft border-soft-hover text-xs font-semibold text-white transition">
+                        Открыть сайт
+                    </a>
+                    <button type="button" onclick="adminLogout()"
+                        class="px-4 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-xs font-semibold text-red-300 transition">
+                        Выйти
+                    </button>
+                </div>
+            </div>
+
+            <!-- Вкладки -->
+            <div id="admin-tabs" class="flex flex-wrap gap-2 pb-4 mb-6 border-b border-soft">
+                <button data-tab="settings" class="adm-tab px-4 py-2 rounded-xl text-xs font-semibold border transition bg-pinksoft/15 border-pinksoft text-white">Основное</button>
+                <button data-tab="catalog" class="adm-tab px-4 py-2 rounded-xl text-xs font-semibold border transition bg-card border-soft text-[#b8aec8] hover:text-white">Товары и категории</button>
+                <button data-tab="team" class="adm-tab px-4 py-2 rounded-xl text-xs font-semibold border transition bg-card border-soft text-[#b8aec8] hover:text-white">Блоки команды</button>
+                <button data-tab="faq" class="adm-tab px-4 py-2 rounded-xl text-xs font-semibold border transition bg-card border-soft text-[#b8aec8] hover:text-white">Частые вопросы</button>
+                <button data-tab="promos" class="adm-tab px-4 py-2 rounded-xl text-xs font-semibold border transition bg-card border-soft text-[#b8aec8] hover:text-white">Промокоды</button>
+                <button data-tab="payments" class="adm-tab px-4 py-2 rounded-xl text-xs font-semibold border transition bg-card border-soft text-[#b8aec8] hover:text-white">Оплата</button>
+                <button data-tab="history" class="adm-tab px-4 py-2 rounded-xl text-xs font-semibold border transition bg-card border-soft text-[#b8aec8] hover:text-white">История</button>
+                <button data-tab="system" class="adm-tab px-4 py-2 rounded-xl text-xs font-semibold border transition bg-card border-soft text-[#b8aec8] hover:text-white">Система</button>
+            </div>
+
+            <!-- 1. ОСНОВНОЕ -->
+            <div id="tab-settings" class="adm-panel space-y-5">
+                <div class="bg-card border border-soft rounded-2xl p-6">
+                    <h3 class="text-base font-bold mb-1">Аватар и иконка сайта</h3>
+                    <p class="text-xs text-[#b8aec8] mb-5">Отображается в шапке, футере, админ-панели и на вкладке браузера</p>
+
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                        <div class="relative shrink-0">
+                            <img id="adm-avatar-preview" src="avatar.webp" alt="Preview"
+                                class="w-[72px] h-[72px] rounded-2xl object-cover border border-pinksoft/30 bg-bg shadow-lg"
+                                onerror="if(window.AVATAR_FALLBACK){this.onerror=null;this.src=AVATAR_FALLBACK;}">
+                        </div>
+
+                        <div class="flex-1 w-full space-y-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Путь к файлу или прямая ссылка (URL)</label>
+                                <input id="adm-avatar-url" type="text" placeholder="avatar.webp или https://..."
+                                    oninput="onAvatarUrlInput(this.value)"
+                                    class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2.5">
+                                <input id="adm-avatar-file" type="file" accept="image/*" class="hidden" onchange="onAvatarFileSelected(event)">
+                                <button type="button" onclick="document.getElementById('adm-avatar-file').click()"
+                                    class="px-4 py-2 rounded-xl bg-pinksoft/15 hover:bg-pinksoft/25 border border-pinksoft/35 text-xs font-semibold text-pinksoft transition">
+                                    Загрузить файл
+                                </button>
+                                <button type="button" onclick="resetAvatarSetting()"
+                                    class="px-4 py-2 rounded-xl bg-card2 hover:bg-[#241b35] border border-soft text-xs font-semibold text-[#b8aec8] hover:text-white transition">
+                                    Сбросить (avatar.webp)
+                                </button>
+                                <span id="adm-avatar-badge" class="hidden text-[11px] px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 font-semibold">
+                                    Изображение сжато (256×256)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card border border-soft rounded-2xl p-6 space-y-4">
+                    <h3 class="text-base font-bold">Основные параметры</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Название магазина</label>
+                            <input id="adm-site-name" class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">IP сервера</label>
+                            <input id="adm-server-ip" class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Версия сервера</label>
+                            <input id="adm-version" class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Онлайн (число)</label>
+                            <input id="adm-online" type="number" class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Заголовок на главной (Hero)</label>
+                        <input id="adm-hero-title" class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        <div class="flex items-center gap-2 mt-2">
+                            <span class="text-[11px] text-[#b8aec8]">Подстановка названия с розовым акцентом:</span>
+                            <button type="button" onclick="insertHeroSiteName()"
+                                class="px-2 py-0.5 rounded-md bg-pinksoft/10 hover:bg-pinksoft/20 border border-pinksoft/30 text-[11px] font-mono text-pinksoft transition">
+                                {siteName}
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Подзаголовок на главной</label>
+                        <input id="adm-hero-sub" class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                    </div>
+                    <div class="pt-1">
+                        <button type="button" onclick="saveSettings()"
+                            class="px-5 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-sm transition">
+                            Сохранить настройки
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. ТОВАРЫ И КАТЕГОРИИ -->
+            <div id="tab-catalog" class="adm-panel hidden space-y-5">
+                <div class="bg-card border border-soft rounded-2xl p-6">
+                    <h3 class="text-base font-bold mb-4">Категории</h3>
+                    <div class="flex gap-2.5 mb-4">
+                        <input id="adm-new-cat" placeholder="Название новой категории (например, Привилегии)"
+                            onkeydown="if(event.key==='Enter'){event.preventDefault();addCategory();}"
+                            class="flex-1 px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        <button type="button" onclick="addCategory()"
+                            class="px-5 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-sm transition shrink-0">
+                            Добавить
+                        </button>
+                    </div>
+                    <div id="adm-cat-list" class="space-y-2.5"></div>
+                </div>
+
+                <div class="bg-card border border-soft rounded-2xl p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <div>
+                            <h3 class="text-base font-bold">Товары</h3>
+                            <p class="text-xs text-[#b8aec8]">Редактирование и добавление открывается в отдельном окне</p>
+                        </div>
+                        <button type="button" onclick="openProductModal()"
+                            class="px-4 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-xs transition">
+                            + Добавить товар
+                        </button>
+                    </div>
+                    <div id="adm-prod-list" class="space-y-2.5"></div>
+                </div>
+            </div>
+
+            <!-- 3. БЛОКИ КОМАНДЫ -->
+            <div id="tab-team" class="adm-panel hidden">
+                <div class="bg-card border border-soft rounded-2xl p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+                        <div>
+                            <h3 class="text-base font-bold">Блоки на главной</h3>
+                            <p class="text-xs text-[#b8aec8]">Можно создавать, редактировать, скрывать и удалять сколько угодно блоков</p>
+                        </div>
+                        <button type="button" onclick="createTeamBanner()"
+                            class="px-4 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-xs transition">
+                            + Создать блок
+                        </button>
+                    </div>
+                    <div id="adm-team-list" class="space-y-4"></div>
+                </div>
+            </div>
+
+            <!-- 4. ЧАСТЫЕ ВОПРОСЫ -->
+            <div id="tab-faq" class="adm-panel hidden space-y-5">
+                <div class="bg-card border border-soft rounded-2xl p-6 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <h3 class="text-base font-bold">Настройки раздела FAQ</h3>
+                        <label class="flex items-center gap-2 text-xs font-medium text-[#b8aec8] cursor-pointer">
+                            <input id="adm-faq-enabled" type="checkbox" class="w-4 h-4 accent-[#f5b4dc] cursor-pointer">
+                            Показывать раздел на сайте
+                        </label>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Заголовок раздела</label>
+                            <input id="adm-faq-title" class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Подзаголовок</label>
+                            <input id="adm-faq-sub" class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        </div>
+                    </div>
+                    <button type="button" onclick="saveFaqMeta()"
+                        class="px-5 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-sm transition">
+                        Сохранить настройки FAQ
+                    </button>
+                </div>
+
+                <div class="bg-card border border-soft rounded-2xl p-6 space-y-4">
+                    <h3 id="adm-faq-form-title" class="text-base font-bold">Добавить вопрос</h3>
+                    <input type="hidden" id="adm-faq-id">
+                    <div>
+                        <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Вопрос</label>
+                        <input id="adm-faq-q" placeholder="Как быстро выдаётся донат?"
+                            class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Ответ</label>
+                        <textarea id="adm-faq-a" rows="3" placeholder="Выдача автоматическая..."
+                            class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white"></textarea>
+                    </div>
+                    <div class="flex gap-2.5">
+                        <button type="button" onclick="saveFaqItem()"
+                            class="px-5 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-sm transition">
+                            Сохранить вопрос
+                        </button>
+                        <button type="button" onclick="resetFaqForm()"
+                            class="px-4 py-2.5 rounded-xl bg-card2 border border-soft text-xs font-semibold text-[#b8aec8] hover:text-white transition">
+                            Сбросить
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-card border border-soft rounded-2xl p-6">
+                    <h3 class="text-base font-bold mb-4">Список вопросов</h3>
+                    <div id="adm-faq-items" class="space-y-2.5"></div>
+                </div>
+            </div>
+
+            <!-- 5. ПРОМОКОДЫ -->
+            <div id="tab-promos" class="adm-panel hidden space-y-5">
+                <div class="bg-card border border-soft rounded-2xl p-6 space-y-4">
+                    <h3 id="adm-promo-form-title" class="text-base font-bold">Создать купон</h3>
+                    <input type="hidden" id="adm-promo-id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Код купона</label>
+                            <input id="adm-promo-code" placeholder="BOOM2026"
+                                class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white uppercase">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Лимит использований (0 = без лимита)</label>
+                            <input id="adm-promo-max" type="number" min="0" value="0"
+                                class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">
+                                Скидка: <strong id="adm-promo-disc-val" class="text-pinksoft">15%</strong>
+                            </label>
+                            <input id="adm-promo-disc" type="range" min="1" max="99" value="15"
+                                oninput="document.getElementById('adm-promo-disc-val').textContent=this.value+'%'"
+                                class="w-full mt-2 accent-[#f5b4dc] cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Действует до (необязательно)</label>
+                            <input id="adm-promo-exp" type="date"
+                                class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        </div>
+                    </div>
+                    <div class="flex gap-2.5">
+                        <button type="button" onclick="savePromo()"
+                            class="px-5 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-sm transition">
+                            Сохранить купон
+                        </button>
+                        <button type="button" onclick="resetPromoForm()"
+                            class="px-4 py-2.5 rounded-xl bg-card2 border border-soft text-xs font-semibold text-[#b8aec8] hover:text-white transition">
+                            Сбросить
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-card border border-soft rounded-2xl p-6">
+                    <h3 class="text-base font-bold mb-4">Купоны</h3>
+                    <div id="adm-promo-list" class="space-y-2.5"></div>
+                </div>
+            </div>
+
+            <!-- 6. ОПЛАТА -->
+            <div id="tab-payments" class="adm-panel hidden space-y-5">
+                <div class="bg-card border border-soft rounded-2xl p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <span id="adm-pay-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                            <div>
+                                <div class="text-sm font-bold">Состояние</div>
+                                <div id="adm-pay-status-text" class="text-xs text-[#b8aec8]">Приём платежей включён</div>
+                            </div>
+                        </div>
+                        <button type="button" id="adm-pay-toggle-btn" onclick="togglePaymentsGlobal()"
+                            class="px-4 py-2 rounded-xl bg-red-500/15 hover:bg-red-500/25 border border-red-500/35 text-xs font-bold text-red-300 transition">
+                            Выключить
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-card border border-soft rounded-2xl p-6 space-y-3">
+                    <h3 class="text-base font-bold mb-1">Способы оплаты</h3>
+
+                    <div class="flex items-center justify-between gap-4 p-4 rounded-xl bg-bg border border-soft">
+                        <div>
+                            <div class="text-sm font-bold">DonationAlerts</div>
+                            <div class="text-xs text-[#b8aec8]">Ручное подтверждение через вкладку «История»</div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" id="adm-chk-da" title="Показывать на сайте"
+                                onchange="togglePaymentMethod('donationAlerts', this.checked)"
+                                class="w-4 h-4 accent-[#f5b4dc] cursor-pointer">
+                            <button type="button" onclick="toggleDaSettings()" title="Настроить DonationAlerts"
+                                class="w-9 h-9 rounded-xl bg-card2 border border-soft hover:border-pinksoft flex items-center justify-center text-sm transition">
+                                ✎
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="adm-da-settings" class="hidden p-4 rounded-xl bg-bg/70 border border-pinksoft/25 space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Ссылка на DonationAlerts</label>
+                            <input id="adm-da-url" placeholder="https://www.donationalerts.com/r/yourname"
+                                class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Инструкция оплаты (отображается при покупке)</label>
+                            <textarea id="adm-da-instr" rows="3"
+                                class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white"></textarea>
+                        </div>
+                        <button type="button" onclick="saveDaSettings()"
+                            class="px-4 py-2 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-xs transition">
+                            Сохранить DonationAlerts
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between gap-4 p-4 rounded-xl bg-bg border border-soft">
+                        <div>
+                            <div class="text-sm font-bold">YooMoney</div>
+                            <div class="text-xs text-[#b8aec8]">Пока недоступно</div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" id="adm-chk-ym" title="Показывать на сайте"
+                                onchange="togglePaymentMethod('yoomoney', this.checked)"
+                                class="w-4 h-4 accent-[#f5b4dc] cursor-pointer">
+                            <button type="button" onclick="showToast('Настройки YooMoney пока недоступны', true)" title="Настроить YooMoney"
+                                class="w-9 h-9 rounded-xl bg-card2 border border-soft hover:border-pinksoft flex items-center justify-center text-sm transition">
+                                ✎
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. ИСТОРИЯ -->
+            <div id="tab-history" class="adm-panel hidden space-y-4">
+                <div class="bg-card border border-soft rounded-2xl p-6 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h3 class="text-base font-bold">История оплат</h3>
+                            <p id="hist-counter" class="text-xs text-[#b8aec8]">Показано: 0 из 0</p>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <button type="button" onclick="resetHistoryFilters()"
+                                class="px-3.5 py-2 rounded-xl bg-card2 border border-soft hover:border-pinksoft/40 text-xs font-semibold text-[#b8aec8] hover:text-white transition">
+                                Сбросить фильтры
+                            </button>
+                            <button type="button" onclick="clearAllHistory()"
+                                class="px-3.5 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-xs font-semibold text-red-300 transition">
+                                Очистить историю
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Фильтры -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-2 border-t border-soft">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-[#b8aec8] mb-1">По нику</label>
+                            <input id="hist-filter-nick" type="text" placeholder="Поиск ника..."
+                                oninput="renderAdminOrders()"
+                                class="w-full px-3 py-2 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-[#b8aec8] mb-1">По товару</label>
+                            <select id="hist-filter-product" onchange="renderAdminOrders()"
+                                class="w-full px-3 py-2 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-xs text-white">
+                                <option value="">Все товары</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-[#b8aec8] mb-1">По статусу</label>
+                            <select id="hist-filter-status" onchange="renderAdminOrders()"
+                                class="w-full px-3 py-2 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-xs text-white">
+                                <option value="">Все статусы</option>
+                                <option value="pending">Ожидает</option>
+                                <option value="approved">Одобрено</option>
+                                <option value="rejected">Отклонено</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-[#b8aec8] mb-1">По дате</label>
+                            <input id="hist-filter-date" type="date" onchange="renderAdminOrders()"
+                                class="w-full px-3 py-2 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-[#b8aec8] mb-1">По методу</label>
+                            <select id="hist-filter-method" onchange="renderAdminOrders()"
+                                class="w-full px-3 py-2 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-xs text-white">
+                                <option value="">Все методы</option>
+                                <option value="donationalerts">DonationAlerts</option>
+                                <option value="yoomoney">YooMoney</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="adm-orders-list" class="space-y-2.5 pt-2"></div>
+                </div>
+            </div>
+            <!-- 8. СИСТЕМА -->
+            <div id="tab-system" class="adm-panel hidden space-y-5">
+                <!-- Плагин -->
+                <div class="bg-card border border-soft rounded-2xl p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-11 h-11 rounded-xl bg-pinksoft/10 border border-pinksoft/25 flex items-center justify-center text-pinksoft shrink-0">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2.5 flex-wrap">
+                                    <h3 class="text-base font-bold">Плагин интеграции (BGAuto)</h3>
+                                    <span id="adm-plugin-status-badge" class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-red-500/15 text-red-300">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                                        Не подключён
+                                    </span>
+                                </div>
+                                <p class="text-xs text-[#b8aec8] mt-0.5">Связывает сайт с сервером для автовыдачи доната и получения онлайна</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="downloadPlugin()"
+                            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-xs transition shrink-0">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            <span>Установить плагин</span>
+                        </button>
+                    </div>
+                </div>
+            
+                <!-- Автоопределение онлайна -->
+                <div class="bg-card border border-soft rounded-2xl p-6">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <div class="flex items-center gap-2.5 flex-wrap">
+                                <h3 class="text-base font-bold">Автоопределение онлайна</h3>
+                                <span id="adm-auto-online-badge" class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-card2 text-[#b8aec8]">
+                                    Из «Основное»
+                                </span>
+                            </div>
+                            <p id="adm-auto-online-desc" class="text-xs text-[#b8aec8] mt-1">
+                                Выключено — отображается число онлайна, указанное вручную во вкладке «Основное».
+                            </p>
+                        </div>
+            
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input id="adm-sys-auto-online" type="checkbox" class="sr-only peer"
+                                onchange="toggleAutoOnline(this.checked)">
+                            <div class="w-12 h-6 bg-bg border border-soft rounded-full peer peer-checked:bg-pinksoft/30 peer-checked:border-pinksoft transition-all after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-[#b8aec8] peer-checked:after:bg-pinksoft after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:after:translate-x-6"></div>
+                        </label>
+                    </div>
+                </div>
+            
+                <!-- Secret ключ -->
+                <div class="bg-card border border-soft rounded-2xl p-6 space-y-3">
+                    <div>
+                        <h3 class="text-base font-bold">Secret</h3>
+                        <p class="text-xs text-[#b8aec8] mt-0.5">Секретный ключ для авторизации плагина на сервере. Никому его не передавайте.</p>
+                    </div>
+            
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                        <input id="adm-sys-secret" type="text" placeholder="Сгенерируйте или введите секретный ключ"
+                            class="flex-1 px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm font-mono text-white">
+            
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button type="button" onclick="generateSystemSecret()"
+                                class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-card2 hover:bg-[#241b35] border border-soft hover:border-pinksoft/40 text-xs font-semibold text-white transition">
+                                <svg class="w-3.5 h-3.5 text-pinksoft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <polyline points="23 4 23 10 17 10"/>
+                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                </svg>
+                                <span>Сгенерировать</span>
+                            </button>
+                            <button type="button" onclick="saveSystemSecret()"
+                                class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-xs transition">
+                                <span>Сохранить</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== МОДАЛКА ТОВАРА (АДМИНКА) ==================== -->
+    <div id="product-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+        onclick="if(event.target===this) closeProductModal()">
+        <div class="w-full max-w-xl max-h-[90vh] overflow-y-auto bg-card border border-pinksoft/25 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 id="pm-title" class="text-lg font-extrabold">Добавить товар</h3>
+                <button type="button" onclick="closeProductModal()"
+                    class="w-8 h-8 rounded-lg bg-card2 border border-soft text-[#b8aec8] hover:text-white">×</button>
+            </div>
+            <input type="hidden" id="pm-id">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Тип товара</label>
+                    <select id="pm-type" onchange="toggleProductTypeFields()"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                        <option value="regular">Обычный</option>
+                        <option value="currency">Валюта</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Категория</label>
+                    <select id="pm-cat"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white"></select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Название товара</label>
+                    <input id="pm-name" placeholder="PREMIUM или Риллики"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Бейдж (необязательно)</label>
+                    <input id="pm-badge" placeholder="ХИТ"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                </div>
+            </div>
+
+            <!-- Поля для обычного товара -->
+            <div id="pm-regular-fields" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Цена (₽)</label>
+                    <input id="pm-price" type="number" min="1" placeholder="199"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Старая цена (необязательно)</label>
+                    <input id="pm-old-price" type="number" min="0" placeholder="299"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                </div>
+            </div>
+
+            <!-- Поля для типа "Валюта" -->
+            <div id="pm-currency-fields" class="hidden space-y-3.5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div>
+                        <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Цена за 1 шт (₽)</label>
+                        <input id="pm-unit-price" type="text" inputmode="decimal" placeholder="0.2"
+    class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Мин. ед. для покупки (от 1 до 100 000)</label>
+                        <input id="pm-min-amount" type="number" min="1" max="100000" placeholder="10"
+                            class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Иконка (файл или URL — если пусто, будет стандартная)</label>
+                    <input id="pm-icon" placeholder="coins.webp или https://..."
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Описание</label>
+                <textarea id="pm-desc" rows="2" placeholder="Краткое описание товара"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white"></textarea>
+            </div>
+            <div id="pm-features-wrap">
+                <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Пункты возможностей (с новой строки)</label>
+                <textarea id="pm-features" rows="3" placeholder="/fly&#10;5 приватов&#10;Уникальный префикс"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white"></textarea>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Команды выдачи (с новой строки, без /)</label>
+                <textarea id="pm-commands" rows="3" placeholder="lp user {user} parent set premium&#10;p give {user} {amount}"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm font-mono text-white"></textarea>
+                <div class="flex flex-wrap gap-1.5 mt-2">
+                    <button type="button" onclick="insertCmdPlaceholder('{user}')" class="px-2.5 py-1 rounded-lg bg-pinksoft/10 hover:bg-pinksoft/20 border border-pinksoft/25 text-[11px] font-mono text-pinksoft">{user}</button>
+                    <button type="button" onclick="insertCmdPlaceholder('{amount}')" class="px-2.5 py-1 rounded-lg bg-pinksoft/10 hover:bg-pinksoft/20 border border-pinksoft/25 text-[11px] font-mono text-pinksoft">{amount}</button>
+                    <button type="button" onclick="insertCmdPlaceholder('{product}')" class="px-2.5 py-1 rounded-lg bg-pinksoft/10 hover:bg-pinksoft/20 border border-pinksoft/25 text-[11px] font-mono text-pinksoft">{product}</button>
+                    <button type="button" onclick="insertCmdPlaceholder('{price}')" class="px-2.5 py-1 rounded-lg bg-pinksoft/10 hover:bg-pinksoft/20 border border-pinksoft/25 text-[11px] font-mono text-pinksoft">{price}</button>
+                    <button type="button" onclick="insertCmdPlaceholder('{order_id}')" class="px-2.5 py-1 rounded-lg bg-pinksoft/10 hover:bg-pinksoft/20 border border-pinksoft/25 text-[11px] font-mono text-pinksoft">{order_id}</button>
+                    <button type="button" onclick="insertCmdPlaceholder('{category}')" class="px-2.5 py-1 rounded-lg bg-pinksoft/10 hover:bg-pinksoft/20 border border-pinksoft/25 text-[11px] font-mono text-pinksoft">{category}</button>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-soft">
+                <button type="button" onclick="closeProductModal()"
+                    class="px-4 py-2.5 rounded-xl bg-card2 border border-soft text-xs font-semibold text-[#b8aec8] hover:text-white transition">
+                    Отмена
+                </button>
+                <button type="button" onclick="saveProductFromModal()"
+                    class="px-5 py-2.5 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] text-[#140d1f] font-bold text-xs transition">
+                    Сохранить товар
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== МОДАЛКА ПОКУПКИ ==================== -->
+    <div id="buy-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+        onclick="if(event.target===this) closeBuyModal()">
+        <div class="w-full max-w-md max-h-[90vh] overflow-y-auto bg-card border border-pinksoft/25 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 id="buy-title" class="text-lg font-extrabold">Покупка</h3>
+                <button type="button" onclick="closeBuyModal()"
+                    class="w-8 h-8 rounded-lg bg-card2 border border-soft text-[#b8aec8] hover:text-white">×</button>
+            </div>
+
+            <div id="buy-disabled-notice" class="hidden text-xs text-red-300 bg-red-500/10 border border-red-500/30 rounded-xl p-3.5">
+                Приём платежей временно отключён администратором.
+            </div>
+
+            <div id="buy-form-body" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Игровой никнейм</label>
+                    <input id="buy-nick" placeholder="Введите ваш ник в Minecraft"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Промокод (если есть)</label>
+                    <div class="flex gap-2">
+                        <input id="buy-promo" placeholder="Введите купон"
+                            class="flex-1 px-3.5 py-2.5 rounded-xl bg-bg border border-soft focus:border-pinksoft focus:outline-none text-sm text-white uppercase">
+                        <button type="button" onclick="applyCheckoutPromo()"
+                            class="px-4 py-2.5 rounded-xl bg-card2 border border-soft hover:border-pinksoft/40 text-xs font-semibold text-white transition">
+                            Применить
+                        </button>
+                    </div>
+                    <div id="buy-promo-msg" class="text-xs mt-1.5"></div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-[#b8aec8] mb-1.5">Способ оплаты</label>
+                    <div id="buy-methods" class="grid grid-cols-2 gap-2.5"></div>
+                </div>
+
+                <div id="buy-method-details"></div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-soft">
+                    <span class="text-sm text-[#b8aec8]">К оплате:</span>
+                    <strong id="buy-final-price" class="text-2xl font-extrabold text-white">0 ₽</strong>
+                </div>
+
+                <button type="button" id="buy-submit-btn" onclick="submitOrder()"
+                    class="w-full py-3 rounded-xl bg-pinksoft hover:bg-[#f8c6e5] disabled:opacity-45 disabled:cursor-not-allowed text-[#140d1f] font-bold text-sm transition">
+                    Оплатить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== МОДАЛКА ПРАВИЛ ==================== -->
+    <div id="rules-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+        onclick="if(event.target===this) closeRulesModal()">
+        <div class="w-full max-w-md bg-card border border-pinksoft/25 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-extrabold">Правила <span data-site-name>BoomGrief</span></h3>
+                <button type="button" onclick="closeRulesModal()"
+                    class="w-8 h-8 rounded-lg bg-card2 border border-soft text-[#b8aec8] hover:text-white">×</button>
+            </div>
+            <div class="text-sm text-[#b8aec8] space-y-2.5 leading-relaxed">
+                <p>1. Перед оплатой внимательно проверяйте правильность игрового никнейма.</p>
+                <p>2. Все средства направляются на развитие и поддержку сервера <span data-site-name class="text-white font-semibold">BoomGrief</span>.</p>
+                <p>3. При оплате через DonationAlerts товар выдаётся после проверки администратором.</p>
+                <p>4. Возврат средств после активации привилегии на сервере не производится.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-[100] flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-[#1a1326] border border-pinksoft/30 text-xs font-semibold text-white shadow-2xl opacity-0 translate-y-3 pointer-events-none transition-all duration-200">
+        <span id="toast-dot" class="w-2 h-2 rounded-full bg-pinksoft"></span>
+        <span id="toast-msg"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 // ================= КОНФИГУРАЦИЯ =================
 // Локально: ws://127.0.0.1:8000/ws
 // Для GitHub Pages (HTTPS): wss://твой-домен/ws
-const WS_URL = "ws://api.stablehost.online/ws";
+const WS_URL = "wss://api.stablehost.online/ws";
 const MAX_CURRENCY_AMOUNT = 100000;
 
 const AVATAR_FALLBACK = "data:image/svg+xml;utf8," + encodeURIComponent(
@@ -1841,3 +1841,4 @@ function saveSystemSecret() {
 updateRoute();
 
 connectWs();
+
